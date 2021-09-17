@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../Screens/HomeScreen';
-import SavedScreen from '../Screens/realSavedScreen';
+
 import CartScreen from '../Screens/CartScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
 import LoginScreen from "../Screens/LoginScreen"
@@ -19,16 +19,19 @@ import AuthStack from '../Navigation/AuthStack';
 
 
 
+
+
+
 const auth = Firebase.auth();
 
 export default function MainNavigation() {
 
-    const { user } = useContext(AuthenticatedUserContext);
 
 
-    const Tab = createMaterialBottomTabNavigator();   
 
-    function MainoTabNavigator() {
+const Tab = createMaterialBottomTabNavigator();   
+
+function MainoTabNavigator() {
     return (
     
     
@@ -47,14 +50,9 @@ export default function MainNavigation() {
 
     return (
 
-        
-       <NavigationContainer>
-
-        <MainoTabNavigator/>
-
-        
-        
-       </NavigationContainer>
+<NavigationContainer>
+<MainoTabNavigator/>
+</NavigationContainer>
       
     )
 }

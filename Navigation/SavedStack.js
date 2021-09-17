@@ -11,7 +11,7 @@ import Firebase from '../config/firebase';
 import AuthStack from '../Navigation/AuthStack'
 
 import ProfileScreen from '../Screens/ProfileScreen';
-
+import RandomScreen from '../Screens/RandomScreen';
 
 
 
@@ -20,12 +20,20 @@ const auth = Firebase.auth();
 
 export default function SavedStack() {
 
+ 
 
-{/*
+  
+
+
+
+
 
     const { user, setUser } = useContext(AuthenticatedUserContext); 
+
+
     const [isLoading, setIsLoading] = useState(true);
   
+
     useEffect(() => {
       // onAuthStateChanged returns an unsubscriber
       const unsubscribeAuth = auth.onAuthStateChanged(async authenticatedUser => {
@@ -37,6 +45,10 @@ export default function SavedStack() {
         }
       });
   
+
+
+
+      
       // unsubscribe auth listener on unmount
       return unsubscribeAuth;
     }, []);
@@ -47,8 +59,8 @@ export default function SavedStack() {
           <ActivityIndicator size='large' />
         </View>
       );
-    }   */}
-    
+    }   
+  
 
 
 
@@ -60,33 +72,34 @@ export default function SavedStack() {
 
 
 
-    const SavedStack = createNativeStackNavigator();
+  const SavedStack = createNativeStackNavigator();
 
-
-
-
-  return (
-
-      
-    <SavedStack.Navigator headerMode="none"  >
-
-       
-<SavedStack.Screen name="Auth" component={AuthStack} /> 
-     
+  function SavedStackScreen () {
+return (
+  <SavedStack.Navigator headerMode="none"  >
+    
 <SavedStack.Screen name="SavedScreen" component={SavedScreen} />
+
      
+</SavedStack.Navigator> 
+)
 
-
-    </SavedStack.Navigator> 
-
-
-   
-
-  );
-}
+  }
 
 
 
 
-   
+
+return (
+
+  <NavigationContainer independent={true}>
+  {user ? <SavedStackScreen /> : <AuthStack />}
+  </NavigationContainer>
+)
+
+  
+
+} 
+
+
 

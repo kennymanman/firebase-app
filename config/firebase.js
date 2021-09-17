@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import Constants from 'expo-constants';
-
+import 'firebase/firestore';
 
 
 
@@ -23,6 +23,18 @@ const firebaseConfig = {
     Firebase = firebase.initializeApp(firebaseConfig);
   }
   
+
+  //For firestore
+  const firestore = firebase.firestore()
+
+  firestore.collection("Fruits").doc("w3fKVYybVbLeYIdRbbNX").set({
+    Firstname:"",
+    Lastname:"",
+    Address:"",
+    Phone:""
+  })
+
+
   export default Firebase;
 
   
