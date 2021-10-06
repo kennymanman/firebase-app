@@ -5,7 +5,7 @@ import Firebase from '../config/firebase';
 import { AuthenticatedUserContext } from '../Navigation/AuthenticatedUserProvider';
 import  IconButton   from '../Components/IconButton';
 import Orders from '../Screens/Orders';
-import Details from '../Screens/Details';
+import Details from './Letails';
 import Password from '../Screens/Password';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 

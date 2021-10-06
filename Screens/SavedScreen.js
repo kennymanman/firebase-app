@@ -22,7 +22,7 @@ export default function SavedScreen() {
 
     <View>
         <Text>Welcome to saved Screen</Text>
-         <Text>{user.id}</Text>
+         <Text>{user.uid}</Text>
 
     </View>
 
@@ -30,3 +30,7 @@ export default function SavedScreen() {
   )
 
 }
+
+
+
+
