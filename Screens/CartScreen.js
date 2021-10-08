@@ -30,6 +30,8 @@ import data from "../Screens/data"
 
 export default function CartScreen ({navigation , ...props}) {
 
+
+const [fruits, setFruits] = useState([])
   
 const updateCart = useContext(AddCartContext)
 const updateSaved = useContext(AddSavedContext)
@@ -51,13 +53,12 @@ const Bandlepress = () =>
       "Saved"
     )
 
+useEffect(() => {
+  db.collection("fruits").onSnapshot(snapshot=> 
+     setReels(snapshot.docs.map(doc =>doc.data()
+     ))
+}, [])
 
- const data = ()=>{
-        db.collection("data").get( ).then((querySnapshot) => {
-             
-          
-        })
-    }
 
 
 
@@ -236,7 +237,7 @@ color= "black"
 data={data}
  renderItem={renderItem}
  renderItem={({ item }) => renderItem({ navigation, item, useCart, useSaved })}
-keyExtractor={item=>item.id.toString}
+keyExtractor={item=>item.id}
  />
 
 
