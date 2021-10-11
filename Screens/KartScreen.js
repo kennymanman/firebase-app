@@ -13,6 +13,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
 import {Header, Left, Right, Title, Body, Subtitle} from "native-base"
+import { Avatar,  Card,  Paragraph } from 'react-native-paper';
+
+import {AddCartContext, AddSavedContext} from "./CartContext"
 import firebase from "../config/firebase"
 
 
@@ -24,21 +27,36 @@ import firebase from "../config/firebase"
 
 
 
-export default function CartScreen () {
+export default function KartScreen ({navigation , ...props}) {
 
 
 
   
+const updateCart = useContext(AddCartContext)
+const updateSaved = useContext(AddSavedContext)
 
 
-const db = firebase.firestore();
+const useCart = updateCart
+const useSaved = updateSaved
 
+
+const Handlepress = () =>
+    Alert.alert(
+      "Added to Cart",
+      
+    );
+
+
+const Bandlepress = () =>
+    Alert.alert(
+      "Saved"
+    )
 
 
 
     const [data, setData] = useState();
 
-    {/*const getData = async () => {
+    const getData = async () => {
         const snapshot = await db.collection('fruits').doc("hUbn1LaJvkWoEPZrilcK").get()
 
         setData(snapshot.data())
@@ -46,14 +64,10 @@ const db = firebase.firestore();
 
     useEffect(() => {
         getData()
-    }, []) */}
+    }, [])
 
 
-useEffect (() =>{
-    db.collection("fruits").onSnapshot(snapshot =>setData(snapshot.docs.map(doc=> doc.data())
-    
-    ))
-}, [])
+
 
 
 
@@ -81,7 +95,6 @@ imageStyle={{borderRadius:12}}
   }}
 >
 
-
 <Text    
   style={{
       fontWeight: "bold",
@@ -98,7 +111,6 @@ imageStyle={{borderRadius:12}}
   </Text>
 
 
-
 <Text style={{
   bottom:0,
    left:0,
@@ -111,7 +123,16 @@ imageStyle={{borderRadius:12}}
 
 
 
-
+ {/* <Text style={{
+    bottom:0,
+     left:0,
+     position: "absolute",
+      marginLeft:10,
+       color:"white",
+        fontSize:12,
+         marginBottom:5}}>
+  
+ {description}{""}  </Text> */}
 
 
 
@@ -121,12 +142,12 @@ imageStyle={{borderRadius:12}}
 <Button type="clear"    
    style={
      {//right:0,
-      top:0,
-      marginTop:3,
-      paddingLeft: 8,
-      }}
+       top:0,
+        marginTop:3,
+         paddingLeft: 8,
+         }}
 icon ={  <Feather name="heart"  size={15} color="white"     />}
-
+onPress={()=> {updateSaved ({name, price, description, image, images, vendor}); Bandlepress();  }}
 
 />
 
@@ -144,7 +165,7 @@ icon ={  <Feather name="heart"  size={15} color="white"     />}
          paddingLeft: 94,
          }}
 icon ={  <Feather name="shopping-bag"  size={15} color="white"     />}
-
+onPress={()=> {updateCart({name, price, image, images, description, vendor}); Handlepress();    }} 
 
 />
 
@@ -166,8 +187,8 @@ icon ={  <Feather name="shopping-bag"  size={15} color="white"     />}
 
 
 //Render Items.
-  const renderItem= ({ item, id})=> (  //had to remove navigation here so i could also render navigation.
- 
+  const renderItem= ({ item, id, useCart, useSaved  })=> (  //had to remove navigation here so i could also render navigation.
+  <TouchableOpacity    onPress={()=> navigation.navigate("HomeScreen" , { name: item.name , price: item.price, images: item.images, description: item.description, vendor: item.vendor})}>
       <Form
        id={item.id}
        name={item.name} 
@@ -178,7 +199,7 @@ icon ={  <Feather name="shopping-bag"  size={15} color="white"     />}
       vendor={item.vendor}
       
        />
-    
+      </TouchableOpacity>
        
   )
   
@@ -202,7 +223,6 @@ return (
 <Title >Fruits</Title>
 </Body>
 <Right>
-
 <Button  style={styles.titch}
 type="clear"
 icon={
@@ -213,7 +233,7 @@ color= "black"
 />
 }
             
-  />    
+  onPress={() => navigation.openDrawer()} />    
 </Right>
 
 </Header>
@@ -225,7 +245,7 @@ color= "black"
     <FlatList    numColumns={2}   
 data={data}
  renderItem={renderItem}
- renderItem={({ item }) => renderItem({ item})}
+ renderItem={({ item }) => renderItem({ navigation, item, useCart, useSaved })}
 keyExtractor={item=>item.id}
  />
 
